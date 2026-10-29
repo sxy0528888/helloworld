@@ -56,25 +56,30 @@
   <div class="card">
     <h1>Hello World！<br/>我是<span class="name">【你的名字】</span>，<br/>我的第一个AI开发的网站</h1>
     <div class="time-box">
-      <div class="time-label">当前服务器时间</div>
+      <div class="time-label">当前时间</div>
       <div id="serverTime">加载中...</div>
     </div>
   </div>
 
   <script>
-    async function fetchServerTime() {
-      try {
-        const res = await fetch('/api/time');
-        const data = await res.json();
-        document.getElementById('serverTime').textContent = data.serverTime;
-      } catch (err) {
-        document.getElementById('serverTime').textContent = '获取失败';
-      }
+    function updateTime() {
+      const now = new Date();
+      // 格式化成中文时间：2026/10/29 15:30:45
+      const timeStr = now.toLocaleString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+      document.getElementById('serverTime').textContent = timeStr;
     }
     // 首次加载
-    fetchServerTime();
+    updateTime();
     // 每秒刷新一次
-    setInterval(fetchServerTime, 1000);
+    setInterval(updateTime, 1000);
   </script>
 </body>
 </html>
